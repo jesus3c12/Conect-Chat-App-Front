@@ -11,7 +11,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'IL Conect Chat',
-      initialRoute: 'login',
+      initialRoute: 'users',
       routes: appRoutes,
     );
   }
