@@ -19,9 +19,9 @@ class ChatMessage extends StatelessWidget {
     return FadeTransition(
       opacity: animationController,
       child: SizeTransition(
-        sizeFactor: CurvedAnimation(parent: animationController, curve: Curves.bounceOut),
+        sizeFactor: CurvedAnimation(parent: animationController, curve: Curves.easeOut),
         child: Container(
-          child: this.uid == '123'
+          child: uid == '123'
           ? _myMessage()
           : _notMyMessage(),
         ),
@@ -33,15 +33,15 @@ class ChatMessage extends StatelessWidget {
     return Align(
       alignment: Alignment.centerRight,
       child: Container(
-        padding: EdgeInsets.all(8.0),
-        margin: EdgeInsets.only(
+        padding: const EdgeInsets.all(10.0),
+        margin: const EdgeInsets.only(
           right: 5,
           bottom: 5,
-          left: 50
+          left: 60
         ),
-        child:  Text( this.text, style: TextStyle( color: Colors.white ), ),
+        child: Text( text, style: const TextStyle( color: Colors.white ) ),
         decoration:  BoxDecoration(
-          color: Color(0xff4D9EF6),
+          color: const Color(0xff4D9EF6),
           borderRadius: BorderRadius.circular(20)
         ),
       ),
@@ -53,15 +53,15 @@ class ChatMessage extends StatelessWidget {
     return Align(
       alignment: Alignment.centerLeft,
       child: Container(
-        padding: EdgeInsets.all(8.0),
-        margin: EdgeInsets.only(
+        padding: const EdgeInsets.all(8.0),
+        margin: const EdgeInsets.only(
           left: 5,
           bottom: 5,
-          right: 50
+          right: 60
         ),
-        child:  Text( this.text, style: TextStyle( color: Colors.black87 ) ),
+        child:  Text( text, style: const TextStyle( color: Colors.black87 ) ),
         decoration:  BoxDecoration(
-          color: Color(0xffE4E5E8),
+          color: const Color(0xffE4E5E8),
           borderRadius: BorderRadius.circular(20)
         ),
       ),

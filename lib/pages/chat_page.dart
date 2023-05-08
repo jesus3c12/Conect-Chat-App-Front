@@ -14,10 +14,10 @@ class ChatPage extends StatefulWidget {
 
 class _ChatPageState extends State<ChatPage> with TickerProviderStateMixin {
 
-  final _textController = new TextEditingController();
-  final _focusNode = new FocusNode();
+  final _textController = TextEditingController();
+  final _focusNode =  FocusNode();
 
-  List<ChatMessage> _messages = [
+  final List<ChatMessage> _messages = [
     
   ];
 
@@ -37,8 +37,8 @@ class _ChatPageState extends State<ChatPage> with TickerProviderStateMixin {
               backgroundColor: Colors.blue[100],
               maxRadius: 16,
             ),
-            SizedBox( height: 3 ),
-            Text( 'Ines Flores', style: TextStyle( color:  Colors.black87, fontSize: 14 ) ),
+            const SizedBox( height: 3 ),
+            const Text( 'Ines Flores', style: TextStyle( color:  Colors.black87, fontSize: 14 ) ),
           ],
         ),
       ),
@@ -47,13 +47,13 @@ class _ChatPageState extends State<ChatPage> with TickerProviderStateMixin {
           children: <Widget> [
             Flexible(
               child: ListView.builder(
-                physics: BouncingScrollPhysics(),
+                physics: const BouncingScrollPhysics(),
                 itemCount: _messages.length,
                 itemBuilder: (_, i) => _messages[i],
                 reverse: true,
               )
             ),
-            Divider( height: 1 ),
+            const Divider( height: 1 ),
 
             //TODO: caja de texto
             Container(
@@ -70,7 +70,7 @@ class _ChatPageState extends State<ChatPage> with TickerProviderStateMixin {
 
     return SafeArea(
       child: Container(
-        margin: EdgeInsets.symmetric( horizontal: 8.0 ),
+        margin: const EdgeInsets.symmetric( horizontal: 8.0 ),
         child: Row(
           children: <Widget> [
 
@@ -91,7 +91,7 @@ class _ChatPageState extends State<ChatPage> with TickerProviderStateMixin {
                     }
                   });
                 },
-                decoration: InputDecoration.collapsed(
+                decoration: const InputDecoration.collapsed(
                   hintText: 'Enviar Mensaje'
                 ),
                 focusNode: _focusNode,
@@ -100,23 +100,23 @@ class _ChatPageState extends State<ChatPage> with TickerProviderStateMixin {
 
             //Boton de enviar
             Container(
-              margin: EdgeInsets.symmetric( horizontal:  4.0 ),
+              margin: const EdgeInsets.symmetric( horizontal:  4.0 ),
               child: Platform.isIOS
               ? CupertinoButton(
-                child: Text('Enviar'), 
+                child: const Text('Enviar'), 
                 onPressed: _isWriting
                     ? () => _hanledSubmmit( _textController.text.trim() )
                     : null, 
               )
 
               : Container(
-                margin: EdgeInsets.symmetric( horizontal: 4.0 ),
+                margin: const EdgeInsets.symmetric( horizontal: 4.0 ),
                 child: IconTheme(
                   data: IconThemeData( color: Colors.blue[400] ),
                   child: IconButton(
                     highlightColor: Colors.transparent,
                     splashColor: Colors.transparent,
-                    icon: Icon( Icons.send ),
+                    icon: const Icon( Icons.send ),
                     onPressed: _isWriting
                     ? () => _hanledSubmmit( _textController.text.trim() )
                     : null, 
@@ -139,10 +139,10 @@ class _ChatPageState extends State<ChatPage> with TickerProviderStateMixin {
     _textController.clear();
     _focusNode.requestFocus();
 
-    final newMessage = new ChatMessage(
+    final newMessage = ChatMessage(
       text: texto,
        uid: '123', 
-       animationController: AnimationController( vsync: this, duration: Duration( milliseconds: 400 ) ),
+       animationController: AnimationController( vsync: this, duration: const Duration( milliseconds: 500 ) ),
     );
     _messages.insert(0, newMessage);
     newMessage.animationController.forward();
