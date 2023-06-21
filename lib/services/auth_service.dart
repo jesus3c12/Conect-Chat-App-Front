@@ -10,10 +10,10 @@ import 'package:conect_chat/models/user.dart';
 
 class AuthService with ChangeNotifier {
 
-  User? usuario;
+  late Usuario usuario;
   bool _autenticando = false;
 
-  final _storage = new FlutterSecureStorage();
+  final _storage = const FlutterSecureStorage();
 
   bool get autenticando => _autenticando;
   set autenticando( bool valor ) {
@@ -23,13 +23,13 @@ class AuthService with ChangeNotifier {
 
   // Getters del token de forma estatica
   static Future<String?> getToken() async {
-    final _storage = new FlutterSecureStorage();
+    final _storage = FlutterSecureStorage();
     final token = await _storage.read(key: 'token');
     return token;
   }
 
   static Future<void> deleteToken() async {
-    final _storage = new FlutterSecureStorage();
+    final _storage = FlutterSecureStorage();
     await _storage.delete(key: 'token');
   }
 
@@ -58,7 +58,7 @@ class AuthService with ChangeNotifier {
       final loginResponse = loginResponseFromJson( resp.body );
       usuario = loginResponse.usuario;
 
-      this._guardarToken(loginResponse.token);
+      await _guardarToken(loginResponse.token);
 
       return true;
     } else {
@@ -91,8 +91,7 @@ class AuthService with ChangeNotifier {
     if ( resp.statusCode == 200 ) {
       final loginResponse = loginResponseFromJson( resp.body );
       usuario = loginResponse.usuario;
-
-      this._guardarToken(loginResponse.token);
+      await _guardarToken(loginResponse.token);
 
       return true;
     } else {
@@ -103,7 +102,7 @@ class AuthService with ChangeNotifier {
   }
 
   Future<bool> isLoggedIn() async {
-    final token = await this._storage.read(key: 'token') ?? '';
+    final token = await _storage.read(key: 'token') ?? '';
 
     final uri = Uri.parse('${ Enviroment.apiUrl }/login/renew');
 
@@ -121,7 +120,7 @@ class AuthService with ChangeNotifier {
       final loginResponse = loginResponseFromJson( resp.body );
       usuario = loginResponse.usuario;
 
-      await this._guardarToken(loginResponse.token);
+      await _guardarToken(loginResponse.token);
 
       return true;
     } else {

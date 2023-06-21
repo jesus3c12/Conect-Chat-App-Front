@@ -1,5 +1,6 @@
 import 'package:conect_chat/helpers/mostrar_alerta.dart';
 import 'package:conect_chat/services/auth_service.dart';
+import 'package:conect_chat/services/socket_service.dart';
 import 'package:conect_chat/widgets/btn_blue.dart';
 import 'package:conect_chat/widgets/custom_input.dart';
 import 'package:flutter/material.dart';
@@ -68,7 +69,8 @@ class __FormState extends State<_Form> {
   @override
   Widget build(BuildContext context) {
 
-    final authService = Provider.of<AuthService>(context);
+    final authService = Provider.of<AuthService>( context );
+    final socketService = Provider.of<SocketService>( context );
 
     return Container(
       margin: const EdgeInsets.only( top: 50 ),
@@ -96,16 +98,17 @@ class __FormState extends State<_Form> {
 
           BtnBlue(
             text: 'Crear cuenta', 
-            onPressed: authService.autenticando ? null : () async {
+            onPressed: authService.autenticando ? ()=>{} : () async {
               print( nameCtrl );
               print( emailCtrl );
               print( passCtrl );
               final registerOk = await authService.register(nameCtrl.text.trim(), emailCtrl.text.trim(), passCtrl.text.trim());
 
               if ( registerOk == true ) {
-                Navigator.pushReplacementNamed(context, 'usuarios');
+                socketService.connect()
+;                Navigator.pushReplacementNamed(context, 'users');
               } else {
-                mostrarAlerta( context, 'Registro Incorrecto', registerOk );
+                mostrarAlerta(context, 'Registro Incorrecto', registerOk.toString() );
               }
             },
           )

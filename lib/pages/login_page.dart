@@ -1,4 +1,5 @@
 import 'package:conect_chat/helpers/mostrar_alerta.dart';
+import 'package:conect_chat/services/socket_service.dart';
 import 'package:conect_chat/widgets/btn_blue.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -69,6 +70,7 @@ class __FormState extends State<_Form> {
   Widget build(BuildContext context) {
 
     final authService = Provider.of<AuthService>( context );
+    final socketService = Provider.of<SocketService>( context );
 
     return Container(
       margin: const EdgeInsets.only( top: 50 ),
@@ -90,7 +92,9 @@ class __FormState extends State<_Form> {
 
           BtnBlue(
             text: 'Ingrese', 
-            onPressed: authService.autenticando ? null : () async {
+            onPressed: authService.autenticando 
+            ? null 
+            : () async {
 
               FocusScope.of(context).unfocus();
 
@@ -100,7 +104,8 @@ class __FormState extends State<_Form> {
                 passCtrl.text.trim() 
               );
               if ( loginOk ) {
-                Navigator.pushReplacementNamed(context, 'usuarios');
+                socketService.connect();
+                Navigator.pushReplacementNamed(context, 'users');
               } else {
                 // Mostrar alerta
                 mostrarAlerta(

@@ -12,7 +12,7 @@ String loginResponseToJson(LoginResponse data) => json.encode(data.toJson());
 
 class LoginResponse {
     final bool ok;
-    final User usuario;
+    final Usuario usuario;
     final String token;
 
     LoginResponse({
@@ -23,7 +23,7 @@ class LoginResponse {
 
     factory LoginResponse.fromJson(Map<String, dynamic> json) => LoginResponse(
         ok: json["ok"],
-        usuario: User.fromJson(json["usuario"]),
+        usuario: Usuario.fromJson(json["usuario"]),
         token: json["token"],
     );
 
